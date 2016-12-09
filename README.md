@@ -4,8 +4,8 @@
 
 * [Introduction](#introduction)
 * [Packages and files](#packages-and-files)
- * [Action.java](#action.java)
- * [EvnetHandlerService.java](#eventhandlerservice.java)
+ * [Action.java](#actionjava)
+ * [EvnetHandlerService.java](#eventhandlerservicejava)
 * [Adapter configuration](#adapter-configuration)
 
 
