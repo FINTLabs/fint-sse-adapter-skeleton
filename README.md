@@ -12,7 +12,7 @@
 ## Introduction
 
 ## Packages and files
-The adapter is divided into to main packages. The adapter package` is the core adapter code. In general this don't need
+The adapter is divided into to main packages. `The adapter package` is the core adapter code. In general this don't need
 any customization. The `customcode package` (which should be named for example after the application the adapter talks to)
 is where the logic of the adapter is placed.
 
