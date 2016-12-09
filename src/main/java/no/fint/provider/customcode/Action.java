@@ -1,4 +1,4 @@
-package no.fint.provider.hrapp;
+package no.fint.provider.customcode;
 
 import java.util.Arrays;
 import java.util.List;

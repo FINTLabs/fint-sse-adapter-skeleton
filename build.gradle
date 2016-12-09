@@ -53,14 +53,10 @@ dependencies {
     compile('org.glassfish.jersey.media:jersey-media-sse:2.24.1')
     compile('io.codearte.jfairy:jfairy:0.5.3')
     compile('org.yaml:snakeyaml:1.17')
-    compile('com.github.javafaker:javafaker:0.11') {
-        exclude group: 'com.github.bmoliveira', module: 'snake-yaml'
-    }
     compile("com.github.springfox.loader:springfox-loader:${springfoxLoaderVersion}")
     compile('io.github.benas:random-beans:3.3.0')
 
     compile('no.fint:fint-event-model:0.0.10')
-    compile('no.fint:fint-model-arbeidstaker-java:1.0.0')
 
     compile('org.springframework.boot:spring-boot-devtools')
     compile('org.springframework.boot:spring-boot-starter-web')

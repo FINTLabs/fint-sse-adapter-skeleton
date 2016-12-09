@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import no.fint.event.model.Event;
 import no.fint.event.model.Status;
 import no.fint.provider.adapter.sse.FintHeaders;
-import no.fint.provider.hrapp.Action;
+import no.fint.provider.customcode.Action;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;

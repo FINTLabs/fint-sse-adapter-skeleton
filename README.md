@@ -1,1 +1,2 @@
-# FINT employee mock adapter
+# FINT SSE Adapter Skeleton
+

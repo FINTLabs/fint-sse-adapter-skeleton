@@ -15,7 +15,7 @@ public class VersionService {
 
     @PostConstruct
     public void init() {
-        log.info("Greeting from FINT!");
+        log.info("Greetings from FINT!");
         log.info("Running version: {}", version);
     }
 }

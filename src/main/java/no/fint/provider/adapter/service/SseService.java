@@ -5,7 +5,7 @@ import no.fint.provider.adapter.sse.FintHeaders;
 import no.fint.provider.adapter.sse.FintEventListener;
 import no.fint.provider.adapter.sse.SseHeaderProvider;
 import no.fint.provider.adapter.sse.SseHeaderSupportFeature;
-import no.fint.provider.hrapp.service.EventHandlerService;
+import no.fint.provider.customcode.service.EventHandlerService;
 import org.glassfish.jersey.media.sse.EventSource;
 import org.glassfish.jersey.media.sse.SseFeature;
 import org.springframework.beans.factory.annotation.Autowired;

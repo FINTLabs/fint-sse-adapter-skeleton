@@ -2,7 +2,7 @@ package no.fint.provider.adapter.service
 
 import no.fint.event.model.Event
 import no.fint.event.model.Status
-import no.fint.provider.hrapp.Action
+import no.fint.provider.customcode.Action
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpMethod
 import org.springframework.http.ResponseEntity
@@ -20,7 +20,7 @@ class EventStatusServiceSpec extends Specification {
 
     def "Verify valid event"() {
         given:
-        def event = new Event(orgId: "rogfk.no", action: Action.GET_ALL_EMPLOYEES)
+        def event = new Event(orgId: "rogfk.no", action: Action.HEALTH)
 
         when:
         def response = eventStatusService.verifyEvent(event)
