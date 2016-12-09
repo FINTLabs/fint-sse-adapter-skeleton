@@ -31,6 +31,10 @@ public class EventHandlerService {
                 responseEvent = onHealthCheck(event);
             }
 
+            /**
+             * Add if statements for all the actions
+             */
+
             if (responseEvent != null) {
                 responseEvent.setStatus(Status.PROVIDER_RESPONSE);
                 eventResponseService.postResponse(responseEvent);
