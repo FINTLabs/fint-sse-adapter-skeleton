@@ -34,7 +34,7 @@ public enum Action {
 ### EventHandlerService.java
 The actions is handled in the `handleEvent()` method:
 
-``java
+````java
     public void handleEvent(String event) {
         Event eventObj = EventUtil.toEvent(event);
         if (eventObj != null && eventStatusService.verifyEvent(eventObj).getStatus() == Status.PROVIDER_ACCEPTED) {
@@ -56,7 +56,7 @@ The actions is handled in the `handleEvent()` method:
         }
     }
 
-```
+````
 
 ## Adapter configuration
 | Key | Description | Example |
