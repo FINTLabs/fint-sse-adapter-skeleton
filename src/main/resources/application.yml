@@ -5,8 +5,8 @@ springfox:
 fint:
  provider:
   adapter:
-   organizations: fint.no
-   sse-endpoint: "https://api.felleskomponent.no/arbeidstakere/provider/sse/%s"
-   status-endpoint: "https://api.felleskomponent.no/arbeidstakere/provider/status"
-   response-endpoint: "https://api.felleskomponent.no/arbeidstakere/provider/response"
+   organizations:
+   sse-endpoint:
+   status-endpoint:
+   response-endpoint:
 
