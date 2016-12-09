@@ -12,16 +12,29 @@
 ## Introduction
 
 ## Packages and files
-The adapter is divided into to main packages. The adapter package is the core adapter code. In general this don't need
-any customization. The customcode package (which should be named for example after the application the adapter talks to)
+The adapter is divided into to main packages. The adapter package` is the core adapter code. In general this don't need
+any customization. The `customcode package` (which should be named for example after the application the adapter talks to)
 is where the logic of the adapter is placed.
 
 ### Action.java
-This is a ENUM of all the actions this adapter supports. Every adapter must support the HEALTH action.
-
-### EventHandlerService.java
+This is a ENUM of all the actions this adapter supports. Every adapter must support the HEALTH action. For example for
+the student component the action enum should be something like:
 
 ```java
+public enum Action {
+    HEALTH,
+    GET_ALL_STUDENTS,
+    GET_STUDENT,
+    UPDATE_STUDENT;
+
+    ...
+}
+```
+
+### EventHandlerService.java
+The actions is handled in the `handleEvent()` method:
+
+``java
     public void handleEvent(String event) {
         Event eventObj = EventUtil.toEvent(event);
         if (eventObj != null && eventStatusService.verifyEvent(eventObj).getStatus() == Status.PROVIDER_ACCEPTED) {
