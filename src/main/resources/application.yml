@@ -1,0 +1,12 @@
+springfox:
+ title: 'FINT Employee mock-adapter'
+ version: '@version@'
+
+fint:
+ provider:
+  adapter:
+   organizations: rogfk.no, vaf.no, hfk.no
+   sse-endpoint: "https://api.felleskomponent.no/arbeidstakere/provider/sse/%s"
+   status-endpoint: "https://api.felleskomponent.no/arbeidstakere/provider/status"
+   response-endpoint: "https://api.felleskomponent.no/arbeidstakere/provider/response"
+
