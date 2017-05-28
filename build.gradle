@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '1.4.2.RELEASE'
+        springBootVersion = '1.5.3.RELEASE'
     }
     repositories {
         jcenter()
@@ -14,13 +14,12 @@ buildscript {
 apply plugin: 'java'
 apply plugin: 'groovy'
 apply plugin: 'maven'
-apply plugin: 'spring-boot'
+apply plugin: 'org.springframework.boot'
 
 jar {
     version = '0.0.1-SNAPSHOT'
     baseName = 'fint-sse-adapter-skeleton'
 }
-
 
 import org.apache.tools.ant.filters.ReplaceTokens
 afterEvaluate {
@@ -33,11 +32,10 @@ afterEvaluate {
 
 
 sourceCompatibility = 1.8
-targetCompatibility = 1.8
 
 repositories {
+    mavenLocal()
     jcenter()
-    mavenCentral()
     maven {
         url 'http://dl.bintray.com/fint/maven'
     }
@@ -45,22 +43,26 @@ repositories {
 
 dependencies {
     compile('org.projectlombok:lombok')
-    compile('org.glassfish.jersey.media:jersey-media-sse:2.24.1')
-    compile('io.codearte.jfairy:jfairy:0.5.3')
-    compile('org.yaml:snakeyaml:1.17')
-    compile('com.github.springfox.loader:springfox-loader:0.1.2')
-    compile('io.github.benas:random-beans:3.3.0')
+    compile('com.github.springfox.loader:springfox-loader:1.1.1')
 
-    compile('no.fint:fint-event-model:0.0.10')
+    compile('no.fint:fint-sse:0.0.1')
+    compile('no.fint:fint-event-model:0.0.19')
 
     compile('org.springframework.boot:spring-boot-devtools')
     compile('org.springframework.boot:spring-boot-starter-web')
 
-    testCompile('cglib:cglib-nodep:3.2.4')
-    testCompile('org.spockframework:spock-spring:1.0-groovy-2.4')
+    testCompile('cglib:cglib-nodep:3.2.5')
+    testCompile('org.spockframework:spock-spring:1.1-groovy-2.4')
+    testCompile('org.spockframework:spock-core:1.1-groovy-2.4')
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }
 
 bootRun {
     systemProperties System.properties
+}
+
+test {
+    testLogging {
+        events 'passed', 'skipped', 'failed'
+    }
 }

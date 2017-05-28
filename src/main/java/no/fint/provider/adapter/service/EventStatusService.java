@@ -41,7 +41,7 @@ public class EventStatusService {
 
     private void postStatus(Event event) {
         HttpHeaders headers = new HttpHeaders();
-        headers.put(FintHeaders.ORG_ID_HEADER, Lists.newArrayList(event.getOrgId()));
+        headers.put(FintHeaders.HEADER_ORG_ID, Lists.newArrayList(event.getOrgId()));
         HttpEntity<Object> entity = new HttpEntity<>(event, headers);
         ResponseEntity<Void> response = restTemplate.exchange(statusEndpoint, HttpMethod.POST, entity, Void.class);
         log.info("Provider POST status response: {}", response.getStatusCode());
