@@ -1,9 +1,9 @@
 package no.fint.provider.customcode.service
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import no.fint.event.model.Event
-import no.fint.event.model.Status
-import no.fint.provider.adapter.service.EventResponseService
-import no.fint.provider.adapter.service.EventStatusService
+import no.fint.provider.adapter.event.EventResponseService
+import no.fint.provider.adapter.event.EventStatusService
 import spock.lang.Specification
 
 class EventHandlerServiceSpec extends Specification {
@@ -17,29 +17,15 @@ class EventHandlerServiceSpec extends Specification {
         eventHandlerService = new EventHandlerService(eventStatusService: eventStatusService, eventResponseService: eventResponseService)
     }
 
-    def "Do nothing when event status is not PROVIDER_ACCEPTED"() {
-        given:
-        def json = "{\"corrId\":\"c978c986-8d50-496f-8afd-8d27bd68049b\",\"action\":\"action\",\"status\":\"NEW\",\"time\":1481116509260,\"orgId\":\"rogfk.no\",\"source\":\"source\",\"client\":\"client\",\"message\":null,\"data\":[]}"
-
-        when:
-        eventHandlerService.handleEvent(json)
-
-        then:
-        1 * eventStatusService.verifyEvent(_ as Event) >> new Event()
-        0 * eventResponseService.postResponse(_ as Event)
-    }
-
     def "Post response on health check"() {
         given:
-        def json = "{\"corrId\":\"c978c986-8d50-496f-8afd-8d27bd68049b\",\"action\":\"HEALTH\",\"status\":\"PROVIDER_ACCEPTED\",\"time\":1481116509260,\"orgId\":\"rogfk.no\",\"source\":\"source\",\"client\":\"client\",\"message\":null,\"data\":[]}"
-        def event = new Event()
-        event.setStatus(Status.PROVIDER_ACCEPTED)
+        def event = new Event('rogfk.no', 'test', 'GET_ALL', 'test')
+        def json = new ObjectMapper().writeValueAsString(event)
 
         when:
         eventHandlerService.handleEvent(json)
 
         then:
-        1 * eventStatusService.verifyEvent(_ as Event) >> event
         1 * eventResponseService.postResponse(_ as Event)
     }
 }

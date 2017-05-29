@@ -6,10 +6,8 @@ import no.fint.event.model.EventUtil;
 import no.fint.provider.customcode.service.EventHandlerService;
 import org.glassfish.jersey.media.sse.EventListener;
 import org.glassfish.jersey.media.sse.InboundEvent;
-import org.springframework.stereotype.Component;
 
 @Slf4j
-@Component
 public class FintEventListener implements EventListener {
 
     private String orgId;
@@ -24,7 +22,6 @@ public class FintEventListener implements EventListener {
     public void onEvent(InboundEvent inboundEvent) {
         String jsonEvent = inboundEvent.readData(String.class);
         Event<?> event = EventUtil.toEvent(jsonEvent);
-
         if (event == null) {
             log.error("Could not parse Event object");
         } else {
