@@ -1,12 +1,14 @@
+server:
+ port: 8091
+
 springfox:
  title: 'FINT SSE Adapter Skeleton'
  version: '@version@'
 
 fint:
- provider:
-  adapter:
-   organizations:
-   sse-endpoint:
-   status-endpoint:
-   response-endpoint:
+ adapter:
+  organizations: mock.no
+  sse-endpoint: http://localhost:8080/provider/sse/%s
+  status-endpoint: http://localhost:8080/provider/status
+  response-endpoint: http://localhost:8080/provider/response
 
