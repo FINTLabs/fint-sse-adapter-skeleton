@@ -7,6 +7,7 @@ import no.fint.provider.adapter.FintAdapterProps;
 import no.fint.provider.customcode.service.EventHandlerService;
 import no.fint.sse.FintSse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -38,6 +39,15 @@ public class SseInitializer {
             fintSse.connect(fintEventListener, ImmutableMap.of(FintHeaders.HEADER_ORG_ID, orgId));
             sseClients.add(fintSse);
         });
+    }
+
+    @Scheduled(fixedDelay = 5000L)
+    public void checkSseConnection() {
+        for (FintSse sseClient : sseClients) {
+            if (!sseClient.verifyConnection()) {
+                log.info("Reconnecting SSE client");
+            }
+        }
     }
 
     @PreDestroy
