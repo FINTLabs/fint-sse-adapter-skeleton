@@ -7,6 +7,10 @@ import no.fint.provider.customcode.service.EventHandlerService;
 import org.glassfish.jersey.media.sse.EventListener;
 import org.glassfish.jersey.media.sse.InboundEvent;
 
+/**
+ * Event listener for the for the SSE client. When an inbound event is received the {@link #onEvent(InboundEvent)} method
+ * calls {@link EventHandlerService} service.
+ */
 @Slf4j
 public class FintEventListener implements EventListener {
 

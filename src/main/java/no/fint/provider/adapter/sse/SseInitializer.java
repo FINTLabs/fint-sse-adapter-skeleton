@@ -17,6 +17,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Handles the client connections to the provider SSE endpoint
+ */
 @Slf4j
 @Component
 public class SseInitializer {

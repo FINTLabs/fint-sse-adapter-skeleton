@@ -7,7 +7,7 @@ springfox:
 
 fint:
  adapter:
-  organizations: mock.no
+  organizations: pwfa.no
   sse-endpoint: http://localhost:8080/provider/sse/%s
   status-endpoint: http://localhost:8080/provider/status
   response-endpoint: http://localhost:8080/provider/response

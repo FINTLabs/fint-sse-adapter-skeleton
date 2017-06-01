@@ -2,9 +2,12 @@ package no.fint.provider.adapter.event;
 
 import jersey.repackaged.com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
+import no.fint.event.model.DefaultActions;
 import no.fint.event.model.Event;
+import no.fint.event.model.Status;
 import no.fint.provider.adapter.FintAdapterProps;
 import no.fint.provider.adapter.sse.FintHeaders;
+import no.fint.provider.customcode.service.Action;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -13,6 +16,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+/**
+ * Handles statuses back to the provider status endpoint.
+ */
 @Slf4j
 @Service
 public class EventStatusService {
@@ -23,6 +29,28 @@ public class EventStatusService {
     @Autowired
     private RestTemplate restTemplate;
 
+    /**
+     * Verifies if we can handle the event and set the status accordingly.
+     *
+     * @param event
+     * @return The inbound event.
+     */
+    public Event verifyEvent(Event event) {
+        if (Action.getActions().contains(event.getAction()) || DefaultActions.getDefaultActions().contains(event.getAction())) {
+            event.setStatus(Status.PROVIDER_ACCEPTED);
+        } else {
+            event.setStatus(Status.PROVIDER_REJECTED);
+        }
+
+        postStatus(event);
+        return event;
+    }
+
+    /**
+     * Method for posting back the status to the provider.
+     *
+     * @param event
+     */
     public void postStatus(Event event) {
         HttpHeaders headers = new HttpHeaders();
         headers.put(FintHeaders.HEADER_ORG_ID, Lists.newArrayList(event.getOrgId()));

@@ -1,6 +1,5 @@
-# FINT SSE Adapter Skeleton
-
-
+# FINT Java SSE Adapter Skeleton
+[![FINT javadocs](https://img.shields.io/badge/FINT-javadocs-blue.svg)](https://docs.felleskomponent.no/fint-sse-adapter-skeleton/)
 
 ## Introduction
 
@@ -8,6 +7,19 @@
 The adapter is divided into to main packages. The `adapter package` is the core adapter code. In general this don't need
 any customization. The `customcode package` (which should be named for example after the application the adapter talks to)
 is where the logic of the adapter is placed.
+
+### Action.java
+This is a ENUM of all the actions this adapter supports. For example for
+the student component the action enum should be something like:
+
+```java
+public enum Action {
+    GET_ALL_STUDENTS,
+    GET_STUDENT,
+    UPDATE_STUDENT;
+
+    ...
+}
 
 ### EventHandlerService.java
 The actions is handled in the `handleEvent()` method:

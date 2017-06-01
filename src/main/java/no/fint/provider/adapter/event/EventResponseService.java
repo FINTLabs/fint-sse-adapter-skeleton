@@ -13,6 +13,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+/**
+ * Handles responses back to the provider status endpoint.
+ */
 @Slf4j
 @Service
 public class EventResponseService {
@@ -23,10 +26,15 @@ public class EventResponseService {
     @Autowired
     private RestTemplate restTemplate;
 
+    /**
+     * Method for posting back the response to the provider.
+     *
+     * @param event Event to post back
+     */
     public void postResponse(Event event) {
         HttpHeaders headers = new HttpHeaders();
         headers.put(FintHeaders.HEADER_ORG_ID, Lists.newArrayList(event.getOrgId()));
         ResponseEntity<Void> response = restTemplate.exchange(props.getResponseEndpoint(), HttpMethod.POST, new HttpEntity<>(event, headers), Void.class);
-        log.info("Provider POST  response: {}", response.getStatusCode());
+        log.info("Provider POST response: {}", response.getStatusCode());
     }
 }
