@@ -48,7 +48,7 @@ The actions is handled in the `handleEvent()` method:
 | Key | Description | Example |
 |-----|-------------|---------|
 | fint.adapter.organizations | List of orgIds the adapter handles. | rogfk.no, vaf.no, ofk.no |
-| fint.adapter.sse-endpoint | Url to the sse endpoint. | https://api.felleskomponent.no/arbeidstakere/provider/sse |
-| fint.adapter.status-endpoint | Url to the status endpoint. | https://api.felleskomponent.no/arbeidstakere/provider/status |
-| fint.adapter.response-endpoint | Url to the response endpoint. | https://api.felleskomponent.no/arbeidstakere/provider/response |
+| fint.adapter.sse-endpoint | Url to the sse endpoint. | https://play-with-fint-adapter.felleskomponent.no/provider/sse/%s |
+| fint.adapter.status-endpoint | Url to the status endpoint. | https://play-with-fint-adapter.felleskomponent.no//provider/status |
+| fint.adapter.response-endpoint | Url to the response endpoint. | https://play-with-fint-adapter.felleskomponent.no/provider/response |
 

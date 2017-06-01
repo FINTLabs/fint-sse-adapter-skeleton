@@ -7,9 +7,12 @@ import no.fint.event.model.Status;
 import no.fint.event.model.health.Health;
 import no.fint.event.model.health.HealthStatus;
 import no.fint.model.relation.FintResource;
+import no.fint.model.relation.Relation;
 import no.fint.provider.adapter.event.EventResponseService;
 import no.fint.provider.adapter.event.EventStatusService;
 import no.fint.provider.customcode.Action;
+import no.fint.pwfa.model.Dog;
+import no.fint.pwfa.model.Owner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -56,7 +59,6 @@ public class EventHandlerService {
      */
     public void handleEvent(String json) {
         Event event = EventUtil.toEvent(json);
-
         if (event.isHealthCheck()) {
             postHealthCheckResponse(event);
         } else {
@@ -74,10 +76,24 @@ public class EventHandlerService {
                  *
                  */
 
+                if (action == Action.GET_ALL_DOGS) {
+                    onGetAllDogs(responseEvent);
+                }
+
                 responseEvent.setStatus(Status.PROVIDER_RESPONSE);
                 eventResponseService.postResponse(responseEvent);
             }
         }
+    }
+
+    private void onGetAllDogs(Event<FintResource> responseEvent) {
+
+        Dog dog1 = new Dog("1", "Pluto", "Working Springer Spaniel");
+        Relation relation = new Relation.Builder().with(Dog.Relasjonsnavn.OWNER).forType(Dog.class).value("10").build();
+        FintResource<Dog> fintResource = FintResource.with(dog1).addRelasjoner(relation);
+
+        responseEvent.addData(fintResource);
+
     }
 
     /**

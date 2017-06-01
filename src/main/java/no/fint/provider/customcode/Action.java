@@ -7,7 +7,7 @@ import java.util.List;
  * Add the actions the adapter should support.
  */
 public enum Action {
-    ;
+    GET_ALL_DOGS;
 
     /**
      * Gets a list of all enums as string
