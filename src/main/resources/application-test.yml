@@ -1,0 +1,14 @@
+server:
+ port: 8091
+
+springfox:
+ title: 'FINT SSE Adapter Skeleton'
+ version: '@version@'
+
+fint:
+ adapter:
+  organizations: pwfa.no
+  sse-endpoint: http://localhost:8080/provider/sse/%s
+  status-endpoint: http://localhost:8080/provider/status
+  response-endpoint: http://localhost:8080/provider/response
+

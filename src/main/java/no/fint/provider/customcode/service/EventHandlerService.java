@@ -89,7 +89,7 @@ public class EventHandlerService {
     private void onGetAllDogs(Event<FintResource> responseEvent) {
 
         Dog dog1 = new Dog("1", "Pluto", "Working Springer Spaniel");
-        Relation relation = new Relation.Builder().with(Dog.Relasjonsnavn.OWNER).forType(Dog.class).value("10").build();
+        Relation relation = new Relation.Builder().with(Dog.Relasjonsnavn.OWNER).forType(Owner.class).value("10").build();
         FintResource<Dog> fintResource = FintResource.with(dog1).addRelasjoner(relation);
 
         responseEvent.addData(fintResource);
