@@ -20,6 +20,7 @@ public enum Action {
 
     ...
 }
+```
 
 ### EventHandlerService.java
 The actions is handled in the `handleEvent()` method:

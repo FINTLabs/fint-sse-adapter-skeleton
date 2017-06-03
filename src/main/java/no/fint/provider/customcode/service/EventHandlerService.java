@@ -16,6 +16,11 @@ import no.fint.pwfa.model.Owner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 /**
  * The EventHandlerService receives the <code>event</code> from SSE endpoint (provider) in the {@link #handleEvent(String)} method.
  */
@@ -28,6 +33,9 @@ public class EventHandlerService {
 
     @Autowired
     private EventStatusService eventStatusService;
+
+    private List<Dog> dogs;
+    private List<Owner> owners;
 
     /**
      * <p>
@@ -66,18 +74,19 @@ public class EventHandlerService {
                 Action action = Action.valueOf(event.getAction());
                 Event<FintResource> responseEvent = new Event<>(event);
 
-                /**
-                 *
-                 * Add if statements for all the actions
-                 *
-                 *   if (action == Action.GET_ALL_DOGS) {
-                 *       onGetAllDogs(responseEvent);
-                 *   }
-                 *
-                 */
-
-                if (action == Action.GET_ALL_DOGS) {
-                    onGetAllDogs(responseEvent);
+                switch (action) {
+                    case GET_DOG:
+                        onGetDog(responseEvent);
+                        break;
+                    case GET_OWNER:
+                        onGetOwner(responseEvent);
+                        break;
+                    case GET_ALL_DOGS:
+                        onGetAllDogs(responseEvent);
+                        break;
+                    case GET_ALL_OWNERS:
+                        onGetAllOwners(responseEvent);
+                        break;
                 }
 
                 responseEvent.setStatus(Status.PROVIDER_RESPONSE);
@@ -86,13 +95,65 @@ public class EventHandlerService {
         }
     }
 
+    /**
+     * Example of handling action
+     *
+     * @param responseEvent
+     */
+    private void onGetOwner(Event<FintResource> responseEvent) {
+        Optional<Owner> owner = owners.stream().filter(o -> o.getId().equals(responseEvent.getQuery())).findFirst();
+
+        if (owner.isPresent()) {
+            responseEvent.addData(FintResource.with(owner.get()).addRelasjoner(
+                    new Relation.Builder().with(Owner.Relasjonsnavn.DOG).forType(Dog.class).value(owner.get().getId().substring(0, 1)).build())
+            );
+        }
+    }
+
+    /**
+     * Example of handling action
+     *
+     * @param responseEvent
+     */
+    private void onGetDog(Event<FintResource> responseEvent) {
+        Optional<Dog> dog = dogs.stream().filter(d -> d.getId().equals(responseEvent.getQuery())).findFirst();
+
+        if (dog.isPresent()) {
+            responseEvent.addData(FintResource.with(dog.get()).addRelasjoner(
+                    new Relation.Builder().with(Dog.Relasjonsnavn.OWNER).forType(Owner.class).value(dog.get().getId() + "0").build())
+            );
+
+        }
+    }
+
+    /**
+     * Example of handling action
+     *
+     * @param responseEvent
+     */
+    private void onGetAllOwners(Event<FintResource> responseEvent) {
+
+
+        Relation relationDog1 = new Relation.Builder().with(Owner.Relasjonsnavn.DOG).forType(Dog.class).value("1").build();
+        Relation relationDog2 = new Relation.Builder().with(Owner.Relasjonsnavn.DOG).forType(Dog.class).value("2").build();
+
+        responseEvent.addData(FintResource.with(owners.get(0)).addRelasjoner(relationDog1));
+        responseEvent.addData(FintResource.with(owners.get(1)).addRelasjoner(relationDog2));
+
+    }
+
+    /**
+     * Example of handling action
+     *
+     * @param responseEvent
+     */
     private void onGetAllDogs(Event<FintResource> responseEvent) {
 
-        Dog dog1 = new Dog("1", "Pluto", "Working Springer Spaniel");
-        Relation relation = new Relation.Builder().with(Dog.Relasjonsnavn.OWNER).forType(Owner.class).value("10").build();
-        FintResource<Dog> fintResource = FintResource.with(dog1).addRelasjoner(relation);
+        Relation relationOwner1 = new Relation.Builder().with(Dog.Relasjonsnavn.OWNER).forType(Owner.class).value("10").build();
+        Relation relationOwner2 = new Relation.Builder().with(Dog.Relasjonsnavn.OWNER).forType(Owner.class).value("20").build();
 
-        responseEvent.addData(fintResource);
+        responseEvent.addData(FintResource.with(dogs.get(0)).addRelasjoner(relationOwner1));
+        responseEvent.addData(FintResource.with(dogs.get(1)).addRelasjoner(relationOwner2));
 
     }
 
@@ -125,5 +186,20 @@ public class EventHandlerService {
          * Check application connectivity etc.
          */
         return true;
+    }
+
+    /**
+     * Data used in examples
+     */
+    @PostConstruct
+    void init() {
+        owners = new ArrayList<>();
+        dogs = new ArrayList<>();
+
+        owners.add(new Owner("10", "Mikke Mus"));
+        owners.add(new Owner("20", "Minni Mus"));
+
+        dogs.add(new Dog("1", "Pluto", "Working Springer Spaniel"));
+        dogs.add(new Dog("2", "Lady", "Working Springer Spaniel"));
     }
 }
