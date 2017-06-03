@@ -1,3 +1,3 @@
-FROM java:8
-ADD build/libs/fint-hrapp-mockadapter-*.jar /data/app.jar
+FROM openjdk:8-jre-alpine
+ADD build/libs/fint-sse-adapter-*.jar /data/app.jar
 CMD ["java", "-jar", "/data/app.jar"]
