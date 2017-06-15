@@ -1,5 +1,7 @@
 package no.fint.provider.adapter.sse
 
+import no.fint.event.model.DefaultActions
+import no.fint.event.model.Event
 import no.fint.provider.customcode.service.EventHandlerService
 import org.glassfish.jersey.media.sse.InboundEvent
 import spock.lang.Specification
@@ -12,18 +14,28 @@ class FintEventListenerSpec extends Specification {
     void setup() {
         inboundEvent = Mock(InboundEvent)
         eventHandlerService = Mock(EventHandlerService)
-        fintEventListener = new FintEventListener(eventHandlerService, "rogfk.no")
+        fintEventListener = new FintEventListener(eventHandlerService, 'rogfk.no')
     }
 
-    def "Handle event"() {
+    def "Handle incoming SSE event"() {
         given:
-        def json = "{\"corrId\":\"c978c986-8d50-496f-8afd-8d27bd68049b\",\"action\":\"action\",\"status\":\"NEW\",\"time\":1481116509260,\"orgId\":\"rogfk.no\",\"source\":\"source\",\"client\":\"client\",\"message\":null,\"data\":[]}"
+        def event = new Event(corrId: 'c978c986-8d50-496f-8afd-8d27bd68049b', action: DefaultActions.HEALTH.name(), orgId: 'rogfk.no', client: 'client')
 
         when:
-        fintEventListener.onEvent(inboundEvent)
+        fintEventListener.onEvent(event)
 
         then:
-        1 * inboundEvent.readData(String) >> json
-        1 * eventHandlerService.handleEvent(_ as String)
+        1 * eventHandlerService.handleEvent(event)
+    }
+
+    def "Skip processing for unknown orgId action"() {
+        given:
+        def event = new Event(corrId: 'c978c986-8d50-496f-8afd-8d27bd68049b', action: DefaultActions.HEALTH.name(), orgId: 'unknown-orgId', client: 'client')
+
+        when:
+        fintEventListener.onEvent(event)
+
+        then:
+        0 * eventHandlerService.handleEvent(event)
     }
 }

@@ -63,10 +63,9 @@ public class EventHandlerService {
      *     }
      * </pre>
      *
-     * @param json The <code>event</code> received from the provider
+     * @param event The <code>event</code> received from the provider
      */
-    public void handleEvent(String json) {
-        Event event = EventUtil.toEvent(json);
+    public void handleEvent(Event event) {
         if (event.isHealthCheck()) {
             postHealthCheckResponse(event);
         } else {

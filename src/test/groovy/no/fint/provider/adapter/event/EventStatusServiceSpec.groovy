@@ -2,6 +2,7 @@ package no.fint.provider.adapter.event
 
 import no.fint.event.model.DefaultActions
 import no.fint.event.model.Event
+import no.fint.event.model.Status
 import no.fint.provider.adapter.FintAdapterProps
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpMethod
@@ -20,15 +21,16 @@ class EventStatusServiceSpec extends Specification {
         eventStatusService = new EventStatusService(props: fintAdapterProps, restTemplate: restTemplate)
     }
 
-    def "POST event status"() {
+    def "Verify event and POST event status"() {
         given:
         def event = new Event(orgId: 'rogfk.no', action: DefaultActions.HEALTH.name())
 
         when:
-        eventStatusService.postStatus(event)
+        def verifiedEvent = eventStatusService.verifyEvent(event)
 
         then:
         1 * fintAdapterProps.getStatusEndpoint() >> 'http://localhost'
         1 * restTemplate.exchange(_ as String, _ as HttpMethod, _ as HttpEntity, _ as Class) >> ResponseEntity.ok().build()
+        verifiedEvent.status == Status.PROVIDER_ACCEPTED
     }
 }

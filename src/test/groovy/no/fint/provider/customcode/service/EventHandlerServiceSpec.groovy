@@ -1,8 +1,7 @@
 package no.fint.provider.customcode.service
 
-import com.fasterxml.jackson.databind.ObjectMapper
+import no.fint.event.model.DefaultActions
 import no.fint.event.model.Event
-import no.fint.event.model.Status
 import no.fint.provider.adapter.event.EventResponseService
 import no.fint.provider.adapter.event.EventStatusService
 import spock.lang.Specification
@@ -20,11 +19,10 @@ class EventHandlerServiceSpec extends Specification {
 
     def "Post response on health check"() {
         given:
-        def event = new Event('rogfk.no', 'test', 'HEALTH', 'test')
-        def json = new ObjectMapper().writeValueAsString(event)
+        def event = new Event('rogfk.no', 'test', DefaultActions.HEALTH, 'test')
 
         when:
-        eventHandlerService.handleEvent(json)
+        eventHandlerService.handleEvent(event)
 
         then:
         1 * eventResponseService.postResponse(_ as Event)

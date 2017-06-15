@@ -3,8 +3,8 @@ package no.fint.provider.adapter.event;
 import jersey.repackaged.com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import no.fint.event.model.Event;
+import no.fint.event.model.HeaderConstants;
 import no.fint.provider.adapter.FintAdapterProps;
-import no.fint.provider.adapter.sse.FintHeaders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -33,7 +33,7 @@ public class EventResponseService {
      */
     public void postResponse(Event event) {
         HttpHeaders headers = new HttpHeaders();
-        headers.put(FintHeaders.HEADER_ORG_ID, Lists.newArrayList(event.getOrgId()));
+        headers.put(HeaderConstants.ORG_ID, Lists.newArrayList(event.getOrgId()));
         ResponseEntity<Void> response = restTemplate.exchange(props.getResponseEndpoint(), HttpMethod.POST, new HttpEntity<>(event, headers), Void.class);
         log.info("Provider POST response: {}", response.getStatusCode());
     }

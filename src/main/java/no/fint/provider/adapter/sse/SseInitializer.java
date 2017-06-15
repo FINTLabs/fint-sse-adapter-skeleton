@@ -3,6 +3,7 @@ package no.fint.provider.adapter.sse;
 import com.google.common.collect.ImmutableMap;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import no.fint.event.model.HeaderConstants;
 import no.fint.provider.adapter.FintAdapterProps;
 import no.fint.provider.customcode.service.EventHandlerService;
 import no.fint.sse.FintSse;
@@ -15,7 +16,6 @@ import javax.annotation.PreDestroy;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * Handles the client connections to the provider SSE endpoint
@@ -36,10 +36,9 @@ public class SseInitializer {
     @PostConstruct
     public void init() {
         Arrays.asList(props.getOrganizations()).forEach(orgId -> {
-            String sseUrl = String.format(props.getSseEndpoint(), UUID.randomUUID().toString());
-            FintSse fintSse = new FintSse(sseUrl);
+            FintSse fintSse = new FintSse(props.getSseEndpoint());
             FintEventListener fintEventListener = new FintEventListener(eventHandlerService, orgId);
-            fintSse.connect(fintEventListener, ImmutableMap.of(FintHeaders.HEADER_ORG_ID, orgId));
+            fintSse.connect(fintEventListener, ImmutableMap.of(HeaderConstants.ORG_ID, orgId));
             sseClients.add(fintSse);
         });
     }
