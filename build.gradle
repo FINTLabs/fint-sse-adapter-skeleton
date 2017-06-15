@@ -58,6 +58,8 @@ dependencies {
     compile('no.fint:fint-relation-model:0.0.22')
     compile('no.fint:fint-pwfa-model:0.0.1')
 
+    /* --> Models <-- */
+
     compile('org.springframework.boot:spring-boot-devtools')
     compile('org.springframework.boot:spring-boot-starter-web')
 

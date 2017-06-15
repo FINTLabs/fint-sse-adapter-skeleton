@@ -2,6 +2,11 @@
 [![FINT javadocs](https://img.shields.io/badge/FINT-javadocs-blue.svg)](https://docs.felleskomponent.no/fint-sse-adapter-skeleton/)
 
 ## Introduction
+This project is a skeleton for develop FINT Java SSE adapter. You can find more information about adapter development in
+the following links:
+
+* [Overview](https://fintprosjektet.github.io/adapter/overview/)
+* [Tutorial](https://fintprosjektet.github.io/adapter/tut-java-sse/)
 
 ## Packages and files
 The adapter is divided into to main packages. The `adapter package` is the core adapter code. In general this don't need
