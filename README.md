@@ -31,8 +31,7 @@ public enum Action {
 The actions is handled in the `handleEvent()` method:
 
 ```java
-  public void handleEvent(String json) {
-   Event event = EventUtil.toEvent(json);
+  public void handleEvent(Event event) {
    if (event.isHealthCheck()) {
        postHealthCheckResponse(event);
    } else {
