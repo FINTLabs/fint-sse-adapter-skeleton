@@ -42,7 +42,6 @@ public class EventHandlerService {
      * HandleEvent is responsible of handling the <code>event</code>. This is what should be done:
      * </p>
      * <ol>
-     * <li>Convert the JSON event to an <a href="https://docs.felleskomponent.no/fint-event-model/">Event object</a></li>
      * <li>Verify that the adapter can handle the <code>event</code>. This is done in the {@link EventStatusService#verifyEvent(Event)} method</li>
      * <li>Call the code to handle the action</li>
      * <li>Posting back the handled <code>event</code>. This done in the {@link EventResponseService#postResponse(Event)} method</li>
@@ -52,14 +51,11 @@ public class EventHandlerService {
      * </p>
      * <pre>
      *     {@code
-     *     public Event onGetAllDogs(String event) {
-     *         Event<String> dogAllEvent = EventUtil.toEvent(event);
+     *     public void onGetAllDogs(Event<FintResource> dogAllEvent) {
      *
      *         // Call a service to get all dogs from the application and add the result to the event data
-     *         // dogAllEvent.setData(dogs);
+     *         // dogAllEvent.addData(dogResource);
      *
-     *         return dogAllEvent;
-     *         }
      *     }
      * </pre>
      *
