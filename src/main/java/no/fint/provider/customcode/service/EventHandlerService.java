@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * The EventHandlerService receives the <code>event</code> from SSE endpoint (provider) in the {@link #handleEvent(String)} method.
+ * The EventHandlerService receives the <code>event</code> from SSE endpoint (provider) in the {@link #handleEvent(Event)} method.
  */
 @Slf4j
 @Service
