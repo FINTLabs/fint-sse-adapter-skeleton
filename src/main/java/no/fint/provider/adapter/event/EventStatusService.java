@@ -7,7 +7,7 @@ import no.fint.event.model.Event;
 import no.fint.event.model.HeaderConstants;
 import no.fint.event.model.Status;
 import no.fint.provider.adapter.FintAdapterProps;
-import no.fint.provider.customcode.Action;
+import no.fint.pwfa.model.PwfaActions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -36,7 +36,7 @@ public class EventStatusService {
      * @return The inbound event.
      */
     public Event verifyEvent(Event event) {
-        if (Action.getActions().contains(event.getAction()) || DefaultActions.getDefaultActions().contains(event.getAction())) {
+        if (PwfaActions.getActions().contains(event.getAction()) || DefaultActions.getDefaultActions().contains(event.getAction())) {
             event.setStatus(Status.PROVIDER_ACCEPTED);
         } else {
             event.setStatus(Status.PROVIDER_REJECTED);

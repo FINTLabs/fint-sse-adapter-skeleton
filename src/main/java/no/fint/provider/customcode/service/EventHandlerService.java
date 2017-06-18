@@ -2,7 +2,6 @@ package no.fint.provider.customcode.service;
 
 import lombok.extern.slf4j.Slf4j;
 import no.fint.event.model.Event;
-import no.fint.event.model.EventUtil;
 import no.fint.event.model.Status;
 import no.fint.event.model.health.Health;
 import no.fint.event.model.health.HealthStatus;
@@ -10,9 +9,9 @@ import no.fint.model.relation.FintResource;
 import no.fint.model.relation.Relation;
 import no.fint.provider.adapter.event.EventResponseService;
 import no.fint.provider.adapter.event.EventStatusService;
-import no.fint.provider.customcode.Action;
 import no.fint.pwfa.model.Dog;
 import no.fint.pwfa.model.Owner;
+import no.fint.pwfa.model.PwfaActions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -66,7 +65,7 @@ public class EventHandlerService {
             postHealthCheckResponse(event);
         } else {
             if (event != null && eventStatusService.verifyEvent(event).getStatus() == Status.PROVIDER_ACCEPTED) {
-                Action action = Action.valueOf(event.getAction());
+                PwfaActions action = PwfaActions.valueOf(event.getAction());
                 Event<FintResource> responseEvent = new Event<>(event);
 
                 switch (action) {

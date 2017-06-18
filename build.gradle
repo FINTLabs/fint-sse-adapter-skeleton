@@ -56,7 +56,7 @@ dependencies {
     compile('no.fint:fint-sse:0.0.6')
     compile('no.fint:fint-event-model:0.0.26')
     compile('no.fint:fint-relation-model:0.0.22')
-    compile('no.fint:fint-pwfa-model:0.0.1')
+    compile('no.fint:fint-pwfa-model:0.0.2')
 
     /* --> Models <-- */
 
