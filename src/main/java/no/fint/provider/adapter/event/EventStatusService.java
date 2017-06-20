@@ -7,7 +7,7 @@ import no.fint.event.model.Event;
 import no.fint.event.model.HeaderConstants;
 import no.fint.event.model.Status;
 import no.fint.provider.adapter.FintAdapterProps;
-import no.fint.pwfa.model.PwfaActions;
+import no.fint.provider.customcode.SupportedActions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -29,6 +29,9 @@ public class EventStatusService {
     @Autowired
     private RestTemplate restTemplate;
 
+    @Autowired
+    private SupportedActions supportedActions;
+
     /**
      * Verifies if we can handle the event and set the status accordingly.
      *
@@ -36,7 +39,7 @@ public class EventStatusService {
      * @return The inbound event.
      */
     public Event verifyEvent(Event event) {
-        if (PwfaActions.getActions().contains(event.getAction()) || DefaultActions.getDefaultActions().contains(event.getAction())) {
+        if (supportedActions.getActions().contains(event.getAction()) || DefaultActions.getDefaultActions().contains(event.getAction())) {
             event.setStatus(Status.PROVIDER_ACCEPTED);
         } else {
             event.setStatus(Status.PROVIDER_REJECTED);

@@ -4,6 +4,7 @@ import no.fint.event.model.DefaultActions
 import no.fint.event.model.Event
 import no.fint.event.model.Status
 import no.fint.provider.adapter.FintAdapterProps
+import no.fint.provider.customcode.SupportedActions
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpMethod
 import org.springframework.http.ResponseEntity
@@ -13,12 +14,14 @@ import spock.lang.Specification
 class EventStatusServiceSpec extends Specification {
     private EventStatusService eventStatusService
     private FintAdapterProps fintAdapterProps
+    private SupportedActions supportedActions
     private RestTemplate restTemplate
 
     void setup() {
         restTemplate = Mock(RestTemplate)
         fintAdapterProps = Mock(FintAdapterProps)
-        eventStatusService = new EventStatusService(props: fintAdapterProps, restTemplate: restTemplate)
+        supportedActions = new SupportedActions()
+        eventStatusService = new EventStatusService(props: fintAdapterProps, restTemplate: restTemplate, supportedActions: supportedActions)
     }
 
     def "Verify event and POST event status"() {
