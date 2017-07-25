@@ -14,7 +14,7 @@ class FintEventListenerSpec extends Specification {
     void setup() {
         inboundEvent = Mock(InboundEvent)
         eventHandlerService = Mock(EventHandlerService)
-        fintEventListener = new FintEventListener(eventHandlerService, 'rogfk.no')
+        fintEventListener = new FintEventListener(eventHandlerService)
     }
 
     def "Handle incoming SSE event"() {
@@ -26,16 +26,5 @@ class FintEventListenerSpec extends Specification {
 
         then:
         1 * eventHandlerService.handleEvent(event)
-    }
-
-    def "Skip processing for unknown orgId action"() {
-        given:
-        def event = new Event(corrId: 'c978c986-8d50-496f-8afd-8d27bd68049b', action: DefaultActions.HEALTH.name(), orgId: 'unknown-orgId', client: 'client')
-
-        when:
-        fintEventListener.onEvent(event)
-
-        then:
-        0 * eventHandlerService.handleEvent(event)
     }
 }
