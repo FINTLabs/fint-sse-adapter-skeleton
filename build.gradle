@@ -57,8 +57,8 @@ dependencies {
     compile('org.projectlombok:lombok')
     compile('com.github.springfox.loader:springfox-loader:1.2.0')
 
-    compile('no.fint:fint-sse:0.0.19')
-    compile('no.fint:fint-event-model:0.0.27')
+    compile('no.fint:fint-sse:1.0.0')
+    compile('no.fint:fint-event-model:1.0.0')
     compile('no.fint:fint-relation-model:0.0.22')
     compile('no.fint:fint-pwfa-model:0.0.2')
 

@@ -56,6 +56,7 @@ public class EventHandlerService {
      *         // dogAllEvent.addData(dogResource);
      *
      *     }
+     *     }
      * </pre>
      *
      * @param event The <code>event</code> received from the provider
