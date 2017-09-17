@@ -43,3 +43,6 @@ The actions is handled in the `handleEvent()` method. The actions are defined as
 | fint.adapter.status-endpoint | Url to the status endpoint. | https://play-with-fint-adapter.felleskomponent.no//provider/status |
 | fint.adapter.response-endpoint | Url to the response endpoint. | https://play-with-fint-adapter.felleskomponent.no/provider/response |
 
+
+- **[SSE Configuration](https://github.com/FINTlibs/fint-sse#sse-configuration)**
+- **[OAuth Configuration](https://github.com/FINTlibs/fint-sse#oauth-configuration)** 
