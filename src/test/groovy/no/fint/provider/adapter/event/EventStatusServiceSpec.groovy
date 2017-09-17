@@ -34,6 +34,6 @@ class EventStatusServiceSpec extends Specification {
         then:
         1 * fintAdapterProps.getStatusEndpoint() >> 'http://localhost'
         1 * restTemplate.exchange(_ as String, _ as HttpMethod, _ as HttpEntity, _ as Class) >> ResponseEntity.ok().build()
-        verifiedEvent.status == Status.PROVIDER_ACCEPTED
+        verifiedEvent.status == Status.ADAPTER_ACCEPTED
     }
 }

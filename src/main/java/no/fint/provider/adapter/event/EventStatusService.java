@@ -1,6 +1,6 @@
 package no.fint.provider.adapter.event;
 
-import jersey.repackaged.com.google.common.collect.Lists;
+import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import no.fint.event.model.DefaultActions;
 import no.fint.event.model.Event;
@@ -40,9 +40,9 @@ public class EventStatusService {
      */
     public Event verifyEvent(Event event) {
         if (supportedActions.getActions().contains(event.getAction()) || DefaultActions.getDefaultActions().contains(event.getAction())) {
-            event.setStatus(Status.PROVIDER_ACCEPTED);
+            event.setStatus(Status.ADAPTER_ACCEPTED);
         } else {
-            event.setStatus(Status.PROVIDER_REJECTED);
+            event.setStatus(Status.ADAPTER_REJECTED);
         }
 
         postStatus(event);
