@@ -5,9 +5,7 @@ security:
 fint:
  adapter:
   organizations: mock.no
-  sse-endpoint: http://localhost:8080/provider/sse/%s
-  status-endpoint: http://localhost:8080/provider/status
-  response-endpoint: http://localhost:8080/provider/response
+  base-url: http://localhost:8080
 
  oauth:
   enabled: false

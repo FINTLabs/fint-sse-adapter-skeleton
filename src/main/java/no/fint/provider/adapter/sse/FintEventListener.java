@@ -13,7 +13,7 @@ import org.glassfish.jersey.media.sse.InboundEvent;
 @Slf4j
 public class FintEventListener extends AbstractEventListener {
 
-    private EventHandlerService eventHandler;
+    private final EventHandlerService eventHandler;
 
     public FintEventListener(EventHandlerService eventHandler) {
         this.eventHandler = eventHandler;

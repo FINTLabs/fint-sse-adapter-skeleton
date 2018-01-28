@@ -65,7 +65,7 @@ public class EventHandlerService {
         if (event.isHealthCheck()) {
             postHealthCheckResponse(event);
         } else {
-            if (event != null && eventStatusService.verifyEvent(event).getStatus() == Status.ADAPTER_ACCEPTED) {
+            if (eventStatusService.verifyEvent(event).getStatus() == Status.ADAPTER_ACCEPTED) {
                 PwfaActions action = PwfaActions.valueOf(event.getAction());
                 Event<FintResource> responseEvent = new Event<>(event);
 
@@ -98,11 +98,9 @@ public class EventHandlerService {
     private void onGetOwner(Event<FintResource> responseEvent) {
         Optional<Owner> owner = owners.stream().filter(o -> o.getId().equals(responseEvent.getQuery())).findFirst();
 
-        if (owner.isPresent()) {
-            responseEvent.addData(FintResource.with(owner.get()).addRelations(
-                    new Relation.Builder().with(Owner.Relasjonsnavn.DOG).forType(Dog.class).value(owner.get().getId().substring(0, 1)).build())
-            );
-        }
+        owner.ifPresent(owner1 -> responseEvent.addData(FintResource.with(owner1).addRelations(
+                new Relation.Builder().with(Owner.Relasjonsnavn.DOG).forType(Dog.class).value(owner1.getId().substring(0, 1)).build())
+        ));
     }
 
     /**
@@ -113,12 +111,9 @@ public class EventHandlerService {
     private void onGetDog(Event<FintResource> responseEvent) {
         Optional<Dog> dog = dogs.stream().filter(d -> d.getId().equals(responseEvent.getQuery())).findFirst();
 
-        if (dog.isPresent()) {
-            responseEvent.addData(FintResource.with(dog.get()).addRelations(
-                    new Relation.Builder().with(Dog.Relasjonsnavn.OWNER).forType(Owner.class).value(dog.get().getId() + "0").build())
-            );
-
-        }
+        dog.ifPresent(dog1 -> responseEvent.addData(FintResource.with(dog1).addRelations(
+                new Relation.Builder().with(Dog.Relasjonsnavn.OWNER).forType(Owner.class).value(dog1.getId() + "0").build())
+        ));
     }
 
     /**
@@ -127,14 +122,11 @@ public class EventHandlerService {
      * @param responseEvent Event containing the response
      */
     private void onGetAllOwners(Event<FintResource> responseEvent) {
-
-
         Relation relationDog1 = new Relation.Builder().with(Owner.Relasjonsnavn.DOG).forType(Dog.class).value("1").build();
         Relation relationDog2 = new Relation.Builder().with(Owner.Relasjonsnavn.DOG).forType(Dog.class).value("2").build();
 
         responseEvent.addData(FintResource.with(owners.get(0)).addRelations(relationDog1));
         responseEvent.addData(FintResource.with(owners.get(1)).addRelations(relationDog2));
-
     }
 
     /**
@@ -143,13 +135,11 @@ public class EventHandlerService {
      * @param responseEvent Event containing the response
      */
     private void onGetAllDogs(Event<FintResource> responseEvent) {
-
         Relation relationOwner1 = new Relation.Builder().with(Dog.Relasjonsnavn.OWNER).forType(Owner.class).value("10").build();
         Relation relationOwner2 = new Relation.Builder().with(Dog.Relasjonsnavn.OWNER).forType(Owner.class).value("20").build();
 
         responseEvent.addData(FintResource.with(dogs.get(0)).addRelations(relationOwner1));
         responseEvent.addData(FintResource.with(dogs.get(1)).addRelations(relationOwner2));
-
     }
 
     /**

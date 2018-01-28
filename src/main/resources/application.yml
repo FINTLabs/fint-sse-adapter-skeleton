@@ -5,13 +5,10 @@ springfox:
  title: 'FINT SSE Adapter Skeleton'
  version: '@version@'
 
-base-url: https://play-with-fint-adapter.felleskomponent.no/provider
 fint:
  adapter:
   organizations: pwfa.no
-  sse-endpoint: ${base-url}/sse/%s
-  status-endpoint: ${base-url}/status
-  response-endpoint: ${base-url}/response
+  base-url: https://play-with-fint-adapter.felleskomponent.no/provider
 
  oauth:
   enabled: true

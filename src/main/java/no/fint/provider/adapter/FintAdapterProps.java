@@ -11,14 +11,19 @@ public class FintAdapterProps {
     @Value("${fint.adapter.organizations}")
     private String[] organizations;
 
-    @Value("${fint.adapter.sse-endpoint}")
-    private String sseEndpoint;
+    @Value("${fint.adapter.base-url}")
+    private String baseUrl;
 
-    @Value("${fint.adapter.response-endpoint}")
-    private String responseEndpoint;
+    public String getSseEndpoint() {
+        return String.format("%s/sse/%%s", baseUrl);
+    }
 
-    @Value("${fint.adapter.status-endpoint}")
-    private String statusEndpoint;
+    public String getResponseEndpoint() {
+        return String.format("%s/response", baseUrl);
+    }
 
+    public String getStatusEndpoint() {
+        return String.format("%s/status", baseUrl);
+    }
 
 }

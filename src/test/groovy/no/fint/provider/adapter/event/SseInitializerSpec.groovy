@@ -11,10 +11,7 @@ class SseInitializerSpec extends Specification {
     private FintSse fintSse
 
     void setup() {
-        props = Mock(FintAdapterProps) {
-            getOrganizations() >> ['rogfk.no', 'hfk.no', 'vaf.no']
-            getSseEndpoint() >> 'http://localhost'
-        }
+        props = new FintAdapterProps(organizations: ['rogfk.no', 'hfk.no', 'vaf.no'], baseUrl: 'http://localhost')
         fintSse = Mock(FintSse)
     }
 
