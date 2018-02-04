@@ -14,7 +14,7 @@ class EventHandlerServiceSpec extends Specification {
     void setup() {
         eventStatusService = Mock(EventStatusService)
         eventResponseService = Mock(EventResponseService)
-        eventHandlerService = new EventHandlerService(eventStatusService: eventStatusService, eventResponseService: eventResponseService)
+        eventHandlerService = new EventHandlerService(eventResponseService: eventResponseService)
     }
 
     def "Post response on health check"() {
@@ -22,7 +22,7 @@ class EventHandlerServiceSpec extends Specification {
         def event = new Event('rogfk.no', 'test', DefaultActions.HEALTH, 'test')
 
         when:
-        eventHandlerService.handleEvent(event)
+        eventHandlerService.handleHealthCheck(event)
 
         then:
         1 * eventResponseService.postResponse(_ as Event)

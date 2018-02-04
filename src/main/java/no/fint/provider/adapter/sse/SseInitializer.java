@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import no.fint.event.model.HeaderConstants;
 import no.fint.provider.adapter.FintAdapterProps;
-import no.fint.provider.customcode.service.EventHandlerService;
+import no.fint.provider.adapter.event.EventStatusService;
 import no.fint.sse.FintSse;
 import no.fint.sse.FintSseConfig;
 import no.fint.sse.oauth.TokenService;
@@ -33,7 +33,10 @@ public class SseInitializer {
     private FintAdapterProps props;
 
     @Autowired
-    private EventHandlerService eventHandlerService;
+    private List<EventHandler> eventHandlers;
+
+    @Autowired
+    private EventStatusService eventStatusService;
 
     @Autowired(required = false)
     private TokenService tokenService;
@@ -43,7 +46,7 @@ public class SseInitializer {
         FintSseConfig config = FintSseConfig.withOrgIds(props.getOrganizations());
         Arrays.asList(props.getOrganizations()).forEach(orgId -> {
             FintSse fintSse = new FintSse(props.getSseEndpoint(), tokenService, config);
-            FintEventListener fintEventListener = new FintEventListener(eventHandlerService);
+            FintEventListener fintEventListener = new FintEventListener(eventStatusService, eventHandlers);
             fintSse.connect(fintEventListener, ImmutableMap.of(HeaderConstants.ORG_ID, orgId));
             sseClients.add(fintSse);
         });

@@ -2,9 +2,13 @@ package no.fint.provider.adapter.sse;
 
 import lombok.extern.slf4j.Slf4j;
 import no.fint.event.model.Event;
+import no.fint.event.model.Status;
+import no.fint.provider.adapter.event.EventStatusService;
 import no.fint.provider.customcode.service.EventHandlerService;
 import no.fint.sse.AbstractEventListener;
 import org.glassfish.jersey.media.sse.InboundEvent;
+
+import java.util.List;
 
 /**
  * Event listener for the for the SSE client. When an inbound event is received the {@link #onEvent(InboundEvent)} method
@@ -13,10 +17,12 @@ import org.glassfish.jersey.media.sse.InboundEvent;
 @Slf4j
 public class FintEventListener extends AbstractEventListener {
 
-    private final EventHandlerService eventHandler;
+    private final EventStatusService eventStatusService;
+    private final List<EventHandler> eventHandlers;
 
-    public FintEventListener(EventHandlerService eventHandler) {
-        this.eventHandler = eventHandler;
+    public FintEventListener(EventStatusService eventStatusService, List<EventHandler> eventHandlers) {
+        this.eventStatusService = eventStatusService;
+        this.eventHandlers = eventHandlers;
     }
 
     @Override
@@ -28,6 +34,12 @@ public class FintEventListener extends AbstractEventListener {
                 event.getClient(),
                 event.getAction());
 
-        eventHandler.handleEvent(event);
+        if (event.isHealthCheck()) {
+            eventHandlers.forEach(eventHandler -> eventHandler.handleHealthCheck(event));
+        } else if (eventStatusService.verifyEvent(event).getStatus() == Status.ADAPTER_ACCEPTED) {
+            eventHandlers.forEach(eventHandler -> eventHandler.handleEvent(event));
+        } else {
+            log.debug("Event rejected: {}", event);
+        }
     }
 }

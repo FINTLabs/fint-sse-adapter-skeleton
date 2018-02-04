@@ -9,6 +9,7 @@ import no.fint.model.relation.FintResource;
 import no.fint.model.relation.Relation;
 import no.fint.provider.adapter.event.EventResponseService;
 import no.fint.provider.adapter.event.EventStatusService;
+import no.fint.provider.adapter.sse.EventHandler;
 import no.fint.pwfa.model.Dog;
 import no.fint.pwfa.model.Owner;
 import no.fint.pwfa.model.PwfaActions;
@@ -25,13 +26,10 @@ import java.util.Optional;
  */
 @Slf4j
 @Service
-public class EventHandlerService {
+public class EventHandlerService implements EventHandler {
 
     @Autowired
     private EventResponseService eventResponseService;
-
-    @Autowired
-    private EventStatusService eventStatusService;
 
     private List<Dog> dogs;
     private List<Owner> owners;
@@ -62,32 +60,26 @@ public class EventHandlerService {
      * @param event The <code>event</code> received from the provider
      */
     public void handleEvent(Event event) {
-        if (event.isHealthCheck()) {
-            postHealthCheckResponse(event);
-        } else {
-            if (eventStatusService.verifyEvent(event).getStatus() == Status.ADAPTER_ACCEPTED) {
-                PwfaActions action = PwfaActions.valueOf(event.getAction());
-                Event<FintResource> responseEvent = new Event<>(event);
+        PwfaActions action = PwfaActions.valueOf(event.getAction());
+        Event<FintResource> responseEvent = new Event<>(event);
 
-                switch (action) {
-                    case GET_DOG:
-                        onGetDog(responseEvent);
-                        break;
-                    case GET_OWNER:
-                        onGetOwner(responseEvent);
-                        break;
-                    case GET_ALL_DOGS:
-                        onGetAllDogs(responseEvent);
-                        break;
-                    case GET_ALL_OWNERS:
-                        onGetAllOwners(responseEvent);
-                        break;
-                }
-
-                responseEvent.setStatus(Status.ADAPTER_RESPONSE);
-                eventResponseService.postResponse(responseEvent);
-            }
+        switch (action) {
+            case GET_DOG:
+                onGetDog(responseEvent);
+                break;
+            case GET_OWNER:
+                onGetOwner(responseEvent);
+                break;
+            case GET_ALL_DOGS:
+                onGetAllDogs(responseEvent);
+                break;
+            case GET_ALL_OWNERS:
+                onGetAllOwners(responseEvent);
+                break;
         }
+
+        responseEvent.setStatus(Status.ADAPTER_RESPONSE);
+        eventResponseService.postResponse(responseEvent);
     }
 
     /**
@@ -147,7 +139,8 @@ public class EventHandlerService {
      *
      * @param event The event object
      */
-    public void postHealthCheckResponse(Event event) {
+    @Override
+    public void handleHealthCheck(Event event) {
         Event<Health> healthCheckEvent = new Event<>(event);
         healthCheckEvent.setStatus(Status.TEMP_UPSTREAM_QUEUE);
 
