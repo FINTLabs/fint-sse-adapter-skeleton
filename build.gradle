@@ -20,11 +20,6 @@ apply plugin: 'groovy'
 apply plugin: 'maven'
 apply plugin: 'org.springframework.boot'
 
-jar {
-    version = '0.0.1-SNAPSHOT'
-    baseName = 'fint-sse-adapter-skeleton'
-}
-
 javadoc {
     source = sourceSets.main.allJava
     classpath = configurations.compile
