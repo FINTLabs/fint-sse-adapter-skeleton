@@ -1,9 +1,9 @@
-package no.fint.provider.customcode.service
+package no.fint.customcode.service
 
+import no.fint.adapter.event.EventResponseService
+import no.fint.adapter.event.EventStatusService
 import no.fint.event.model.DefaultActions
 import no.fint.event.model.Event
-import no.fint.provider.adapter.event.EventResponseService
-import no.fint.provider.adapter.event.EventStatusService
 import spock.lang.Specification
 
 class EventHandlerServiceSpec extends Specification {

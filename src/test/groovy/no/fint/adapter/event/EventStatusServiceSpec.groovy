@@ -1,10 +1,11 @@
-package no.fint.provider.adapter.event
+package no.fint.adapter.event
 
+import no.fint.adapter.FintAdapterProps
+import no.fint.adapter.event.EventStatusService
+import no.fint.customcode.SupportedActions
 import no.fint.event.model.DefaultActions
 import no.fint.event.model.Event
 import no.fint.event.model.Status
-import no.fint.provider.adapter.FintAdapterProps
-import no.fint.provider.customcode.SupportedActions
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpMethod
 import org.springframework.http.ResponseEntity

@@ -1,14 +1,15 @@
-package no.fint.provider.customcode.service;
+package no.fint.customcode.service;
 
 import lombok.extern.slf4j.Slf4j;
+import no.fint.adapter.event.EventResponseService;
+import no.fint.adapter.event.EventStatusService;
 import no.fint.event.model.Event;
+import no.fint.event.model.ResponseStatus;
 import no.fint.event.model.Status;
 import no.fint.event.model.health.Health;
 import no.fint.event.model.health.HealthStatus;
 import no.fint.model.relation.FintResource;
 import no.fint.model.relation.Relation;
-import no.fint.provider.adapter.event.EventResponseService;
-import no.fint.provider.adapter.event.EventStatusService;
 import no.fint.pwfa.model.Dog;
 import no.fint.pwfa.model.Owner;
 import no.fint.pwfa.model.PwfaActions;
@@ -36,12 +37,34 @@ public class EventHandlerService {
     private List<Dog> dogs;
     private List<Owner> owners;
 
+    public void handleEvent(Event event) {
+        if (event.isHealthCheck()) {
+            postHealthCheckResponse(event);
+        } else {
+            if (eventStatusService.verifyEvent(event).getStatus() == Status.ADAPTER_ACCEPTED) {
+                Event<FintResource> responseEvent = new Event<>(event);
+                try {
+
+                    createEventResponse(event, responseEvent);
+
+                } catch (Exception e) {
+                    log.error("Error handling event {}", event, e);
+                    responseEvent.setResponseStatus(ResponseStatus.ERROR);
+                    responseEvent.setMessage(e.getMessage());
+                } finally {
+                    responseEvent.setStatus(Status.ADAPTER_RESPONSE);
+                    eventResponseService.postResponse(responseEvent);
+                }
+            }
+        }
+    }
+
     /**
+     * TODO
      * <p>
-     * HandleEvent is responsible of handling the <code>event</code>. This is what should be done:
+     * createEventResponse is responsible for responding to the <code>event</code>. This is what should be done:
      * </p>
      * <ol>
-     * <li>Verify that the adapter can handle the <code>event</code>. This is done in the {@link EventStatusService#verifyEvent(Event)} method</li>
      * <li>Call the code to handle the action</li>
      * <li>Posting back the handled <code>event</code>. This done in the {@link EventResponseService#postResponse(Event)} method</li>
      * </ol>
@@ -61,36 +84,25 @@ public class EventHandlerService {
      *
      * @param event The <code>event</code> received from the provider
      */
-    public void handleEvent(Event event) {
-        if (event.isHealthCheck()) {
-            postHealthCheckResponse(event);
-        } else {
-            if (event != null && eventStatusService.verifyEvent(event).getStatus() == Status.ADAPTER_ACCEPTED) {
-                PwfaActions action = PwfaActions.valueOf(event.getAction());
-                Event<FintResource> responseEvent = new Event<>(event);
-
-                switch (action) {
-                    case GET_DOG:
-                        onGetDog(responseEvent);
-                        break;
-                    case GET_OWNER:
-                        onGetOwner(responseEvent);
-                        break;
-                    case GET_ALL_DOGS:
-                        onGetAllDogs(responseEvent);
-                        break;
-                    case GET_ALL_OWNERS:
-                        onGetAllOwners(responseEvent);
-                        break;
-                }
-
-                responseEvent.setStatus(Status.ADAPTER_RESPONSE);
-                eventResponseService.postResponse(responseEvent);
-            }
+    private void createEventResponse(Event event, Event<FintResource> responseEvent) {
+        switch (PwfaActions.valueOf(event.getAction())) {
+            case GET_DOG:
+                onGetDog(responseEvent);
+                break;
+            case GET_OWNER:
+                onGetOwner(responseEvent);
+                break;
+            case GET_ALL_DOGS:
+                onGetAllDogs(responseEvent);
+                break;
+            case GET_ALL_OWNERS:
+                onGetAllOwners(responseEvent);
+                break;
         }
     }
 
     /**
+     * TODO
      * Example of handling action
      *
      * @param responseEvent Event containing the response
@@ -106,6 +118,7 @@ public class EventHandlerService {
     }
 
     /**
+     * TODO
      * Example of handling action
      *
      * @param responseEvent Event containing the response
@@ -122,6 +135,7 @@ public class EventHandlerService {
     }
 
     /**
+     * TODO
      * Example of handling action
      *
      * @param responseEvent Event containing the response
@@ -138,6 +152,7 @@ public class EventHandlerService {
     }
 
     /**
+     * TODO
      * Example of handling action
      *
      * @param responseEvent Event containing the response
@@ -172,6 +187,7 @@ public class EventHandlerService {
     }
 
     /**
+     * TODO
      * This is where we implement the health check code
      *
      * @return {@code true} if health is ok, else {@code false}
@@ -184,6 +200,7 @@ public class EventHandlerService {
     }
 
     /**
+     * TODO
      * Data used in examples
      */
     @PostConstruct

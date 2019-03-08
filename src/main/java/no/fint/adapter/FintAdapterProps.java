@@ -1,4 +1,4 @@
-package no.fint.provider.adapter;
+package no.fint.adapter;
 
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,5 +20,7 @@ public class FintAdapterProps {
     @Value("${fint.adapter.status-endpoint}")
     private String statusEndpoint;
 
+    @Value("${fint.adapter.sse-expiration:1200000}")
+    private int expiration;
 
 }
