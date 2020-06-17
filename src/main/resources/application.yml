@@ -1,15 +1,16 @@
 server:
- port: 8091
+  port: 8091
 
 fint:
- adapter:
-  organizations: pwfa.no
+  adapter:
+    organizations: pwfa.no
   base-url: https://play-with-fint-adapter.felleskomponent.no/provider
 
- oauth:
-  enabled: true
-  username: pwfatut
-  password: pwfatut
-  client-id: 6e1cf7b4-b107-42b3-9435-8fda70726c6a
-  client-secret: 6y4FUuP9BfAXeVqguNKT0ofToIwN5RdB1PaUvx_nCMiQbH9NeGq3pp0jQB9zOQ0APOxEbodzJXp-8RVux6318A
-  access-token-uri: https://namidp01.rogfk.no/nidp/oauth/nam/token
+  oauth:
+    enabled: false
+#    username:
+#    password:
+#    client-id:
+#    client-secret:
+#    access-token-uri:
+#    scope:

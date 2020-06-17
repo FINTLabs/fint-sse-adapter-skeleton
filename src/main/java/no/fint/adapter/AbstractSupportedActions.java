@@ -1,4 +1,4 @@
-package no.fint.provider.adapter;
+package no.fint.adapter;
 
 import lombok.Getter;
 

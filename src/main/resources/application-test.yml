@@ -1,11 +1,11 @@
 security:
- basic:
-  enabled: false
+  basic:
+    enabled: false
 
 fint:
- adapter:
-  organizations: mock.no
+  adapter:
+    organizations: mock.no
   base-url: http://localhost:8080
 
- oauth:
-  enabled: false
+  oauth:
+    enabled: false
