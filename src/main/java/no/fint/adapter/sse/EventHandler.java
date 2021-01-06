@@ -1,4 +1,4 @@
-package no.fint.provider.adapter.sse;
+package no.fint.adapter.sse;
 
 import no.fint.event.model.Event;
 

@@ -1,6 +1,7 @@
 package no.fint.customcode.service;
 
 import lombok.extern.slf4j.Slf4j;
+import no.fint.adapter.sse.EventHandler;
 import no.fint.event.model.Event;
 import no.fint.event.model.ResponseStatus;
 import no.fint.event.model.Status;
@@ -8,7 +9,7 @@ import no.fint.event.model.health.Health;
 import no.fint.event.model.health.HealthStatus;
 import no.fint.model.relation.FintResource;
 import no.fint.model.relation.Relation;
-import no.fint.provider.adapter.event.EventResponseService;
+import no.fint.adapter.event.EventResponseService;
 import no.fint.pwfa.model.Dog;
 import no.fint.pwfa.model.Owner;
 import no.fint.pwfa.model.PwfaActions;

@@ -1,10 +1,10 @@
 package no.fint.adapter.sse;
 
 import lombok.extern.slf4j.Slf4j;
+import no.fint.adapter.event.EventStatusService;
+import no.fint.customcode.service.EventHandlerService;
 import no.fint.event.model.Event;
 import no.fint.event.model.Status;
-import no.fint.provider.adapter.event.EventStatusService;
-import no.fint.provider.customcode.service.EventHandlerService;
 import no.fint.sse.AbstractEventListener;
 import org.glassfish.jersey.media.sse.InboundEvent;
 
