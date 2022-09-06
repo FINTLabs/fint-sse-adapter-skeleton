@@ -8,11 +8,12 @@ import no.fint.event.model.ResponseStatus;
 import no.fint.event.model.Status;
 import no.fint.event.model.health.Health;
 import no.fint.event.model.health.HealthStatus;
+import no.fint.model.pwfa.Dog;
+import no.fint.model.pwfa.Identifikator;
+import no.fint.model.pwfa.Owner;
+import no.fint.model.pwfa.PwfaActions;
 import no.fint.model.relation.FintResource;
 import no.fint.model.relation.Relation;
-import no.fint.pwfa.model.Dog;
-import no.fint.pwfa.model.Owner;
-import no.fint.pwfa.model.PwfaActions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -92,10 +93,10 @@ public class EventHandlerService {
             case GET_OWNER:
                 onGetOwner(responseEvent);
                 break;
-            case GET_ALL_DOGS:
+            case GET_ALL_DOG:
                 onGetAllDogs(responseEvent);
                 break;
-            case GET_ALL_OWNERS:
+            case GET_ALL_OWNER:
                 onGetAllOwners(responseEvent);
                 break;
         }
@@ -112,7 +113,7 @@ public class EventHandlerService {
 
         if (owner.isPresent()) {
             responseEvent.addData(FintResource.with(owner.get()).addRelations(
-                    new Relation.Builder().with(Owner.Relasjonsnavn.DOG).forType(Dog.class).value(owner.get().getId().substring(0, 1)).build())
+                    new Relation.Builder().with(Owner.Relasjonsnavn.DOG).forType(Dog.class).value(owner.get().getId().getIdentifikatorverdi().substring(0, 1)).build())
             );
         }
     }
@@ -208,10 +209,16 @@ public class EventHandlerService {
         owners = new ArrayList<>();
         dogs = new ArrayList<>();
 
-        owners.add(new Owner("10", "Mikke Mus"));
-        owners.add(new Owner("20", "Minni Mus"));
+        owners.add(new Owner(createId("10"), "Mikke Mus"));
+        owners.add(new Owner(createId("20"), "Minni Mus"));
 
-        dogs.add(new Dog("1", "Pluto", "Working Springer Spaniel"));
-        dogs.add(new Dog("2", "Lady", "Working Springer Spaniel"));
+        dogs.add(new Dog("1", createId("Pluto"), "Working Springer Spaniel"));
+        dogs.add(new Dog("2", createId("Lady"), "Working Springer Spaniel"));
+    }
+
+    private Identifikator createId(String id){
+        Identifikator identifikator = new Identifikator();
+        identifikator.setIdentifikatorverdi(id);
+        return identifikator;
     }
 }

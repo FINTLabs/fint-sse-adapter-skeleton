@@ -1,7 +1,7 @@
 package no.fint.customcode;
 
 import no.fint.adapter.AbstractSupportedActions;
-import no.fint.pwfa.model.PwfaActions;
+import no.fint.model.pwfa.PwfaActions;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
