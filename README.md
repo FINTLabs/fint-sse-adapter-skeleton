@@ -36,12 +36,13 @@ The actions is handled in the `handleEvent()` method. The actions are defined as
 ```
 
 ## Adapter configuration
-| Key | Description | Example |
-|-----|-------------|---------|
-| fint.adapter.organizations | List of orgIds the adapter handles. | rogfk.no, vaf.no, ofk.no |
-| fint.adapter.sse-endpoint | Url to the sse endpoint. | https://play-with-fint-adapter.felleskomponent.no/provider/sse/%s |
-| fint.adapter.status-endpoint | Url to the status endpoint. | https://play-with-fint-adapter.felleskomponent.no//provider/status |
-| fint.adapter.response-endpoint | Url to the response endpoint. | https://play-with-fint-adapter.felleskomponent.no/provider/response |
+| Key                            | Description                         | Example                                                                   |
+|--------------------------------|-------------------------------------|---------------------------------------------------------------------------|
+| fint.adapter.organizations     | List of orgIds the adapter handles. | rogfk.no, vaf.no, ofk.no                                                  |
+| base.url                       | Base url.                           | https://play-with-fint-adapter.felleskomponent.no/provider/utdanning/elev |
+| fint.adapter.sse-endpoint      | Url to the sse endpoint.            | https://play-with-fint-adapter.felleskomponent.no/provider/sse/%s         |
+| fint.adapter.status-endpoint   | Url to the status endpoint.         | https://play-with-fint-adapter.felleskomponent.no//provider/status        |
+| fint.adapter.response-endpoint | Url to the response endpoint.       | https://play-with-fint-adapter.felleskomponent.no/provider/response       |
 
 
 - **[SSE Configuration](https://github.com/FINTlibs/fint-sse#sse-configuration)**
